@@ -1,0 +1,42 @@
+
+<form  #heroForm="ngForm" enctype="multipart/form-data">
+  <input type="file" name="uploadFile"  ng2FileSelect [uploader]="uploader" />
+
+  <button type="button"  class="btn btn-success btn-s"
+          (click)="uploadSingleFile()"
+          [disabled]="!uploader.getNotUploadedItems().length" >
+    Upload an Image
+  </button>
+  <div>
+    <input type="file" name="multiUploadFile" multiple
+           (change)="fileChangeEvent($event)"
+           ng2FileSelect [uploader]="multiUploader"
+           enctype="multipart/form-data"
+            />
+    <!--ng2FileSelect [uploader]="multiUploader"-->
+    <button type="button" class=" btn btn-success btn-s"
+            (click)="uploadMultipleFiles()"
+             >
+      Upload multiple Images
+      <!--[disabled]="!multiUploader.getNotUploadedItems().length"-->
+    </button>
+  </div>
+  <br>
+  <br>
+  <div>
+    <input type="text" [(ngModel)]="searchKeyword" name="searchKeyword">
+    <button type="button" class="btn"   (click)="search()" >Search</button>
+    <div *ngIf="mDocument && mDocument &&  mDocument.length>0 ">
+      <!--<h2>{{hero.name | uppercase}} Details</h2>-->
+      <!--<div><span>{{ mDocument.hits }} </span></div>-->
+      <ul class="badge">
+        <li *ngFor="let document of mDocument;let i=index">
+          <div>
+            <span class="badge badge-pill badge-primary"  >{{ document._source.name }}<i class="fa fa-cross-circle-right fa-lg" ></i></span>
+            <button type="button" class="btn" (click)="downloadFile(document._source.name)"><i class="fa fa-download"></i> Download</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>
